@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="user-scalable=no">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .left-panel {
+            flex: 3;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .right-panel {
+            flex: 7;
+            margin: 20px;
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .btn {
+            margin: 10px;
+            flex: 1;
+        }
+
+        .row {
+            display: flex;
+            flex: 1
+        }
+
+        .top-banner {
+            margin: 20px 20px 0px 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .answer {
+            margin: 20px 20px 0px 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="top-banner">
+        <a class="btn btn-default btn-lg" v-on:click="repeatQuestion">再读一次</a>
+        <a class="btn btn-default btn-lg" v-on:click="next">下一题</a>
+    </div>
+    <div class="answer">
+        <p v-on:click="repeatAnswer" style="margin-right: 20px;">选中：{{ (shengMu ? shengMu.text: "") + (yunMu ?
+            yunMu.text : "") }}</p>
+        <p v-if="correct" style="color: green;">正确</p>
+        <p v-if="correct === false" style="color: red;">不正确</p>
+    </div>
+    <div style="flex-direction: row; display: flex">
+        <div class="left-panel">
+            <a class="btn btn-default btn-lg" v-for="shengMu in ShengMuList" v-on:click="onClickShengMu(shengMu)">{{shengMu.text}}</a>
+        </div>
+        <div class="right-panel">
+            <div class="row" v-for="row in YunMuList">
+                <a class="btn btn-default btn-lg" v-for="yunMu in row" v-on:click="onClickYunMu(yunMu)">
+                    {{yunMu.text}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="pinyin.js"></script>
+</html>
