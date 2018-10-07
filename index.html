@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
-    <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="viewport" content="user-scalable=no">
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
-
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         .left-panel {
-            flex: 3;
+            flex: 2;
             margin: 20px;
             display: flex;
             flex-direction: column;
@@ -19,7 +15,7 @@
         }
 
         .right-panel {
-            flex: 7;
+            flex: 8;
             margin: 20px;
             display: flex;
             height: 100%;
@@ -54,13 +50,22 @@
             display: flex;
             flex-direction: column;
         }
+
+        .panels {
+            flex-direction: row;
+            display: flex;
+        }
+
+        .panels .btn {
+            font-size: 2em;
+        }
     </style>
 </head>
 <body>
 <div id="app">
     <div class="top-banner">
         <a class="btn btn-default btn-lg" v-on:click="repeatQuestion">再读一次</a>
-        <a class="btn btn-default btn-lg" v-on:click="next">下一题</a>
+        <a class="btn btn-default btn-lg" v-on:click="next">{{started?"下一题":"开始"}}</a>
     </div>
     <div class="answer">
         <p v-on:click="repeatAnswer" style="margin-right: 20px;">选中：{{ (shengMu ? shengMu.text: "") + (yunMu ?
@@ -68,7 +73,7 @@
         <p v-if="correct" style="color: green;">正确</p>
         <p v-if="correct === false" style="color: red;">不正确</p>
     </div>
-    <div style="flex-direction: row; display: flex">
+    <div class="panels">
         <div class="left-panel">
             <a class="btn btn-default btn-lg" v-for="shengMu in ShengMuList" v-on:click="onClickShengMu(shengMu)">{{shengMu.text}}</a>
         </div>
@@ -84,5 +89,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="validPinYinList.js"></script>
 <script src="pinyin.js"></script>
 </html>

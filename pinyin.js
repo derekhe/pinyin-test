@@ -50,7 +50,8 @@ const app = new Vue({
     yunMu: null,
     answerKey: "",
     correct: null,
-    questionKey: null
+    questionKey: null,
+    started: false
   },
   methods: {
     onClickShengMu: (e) => {
@@ -87,17 +88,23 @@ const app = new Vue({
     repeatQuestion: () => {
       app.playPinyin(app.questionKey)
     },
-    next: () => {
+    next: _.throttle(() => {
       app.shengMu = null;
       app.yunMu = null;
       app.correct = null;
-      const shenMu = _.sample(app.ShengMuList).text;
-      const yunMu = _.sample(_.sample(app.YunMuList)).key;
-      const key = shenMu + yunMu;
-      console.log(key)
-      app.playPinyin(key)
+      app.started = true;
+
+      let key
+      while (true) {
+        const shenMu = _.sample(app.ShengMuList).text;
+        const yunMu = _.sample(_.sample(app.YunMuList)).key;
+        key = shenMu + yunMu;
+        if (validPinYinList.includes(key)) break;
+      }
+
+      app.playPinyin(key);
       app.questionKey = key
-    }
+    }, 1000, {'trailing': false})
   },
   watch: {}
 });
