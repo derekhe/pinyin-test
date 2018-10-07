@@ -75,7 +75,7 @@ const app = new Vue({
           new Audio("./mp3/correct.mp3").play()
         }, 500);
       } else {
-        new Audio("./mp3/incorrect.mp3").play()
+        // setTimeout(new Audio("./mp3/incorrect.mp3").play(), 500);
       }
     },
     playPinyin: (key) => {
